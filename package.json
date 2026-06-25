@@ -1,0 +1,5 @@
+{
+  "name": "mailserver-redirect",
+  "version": "1.0.0",
+  "description": "Detect mailservers from email and redirect users"
+}
